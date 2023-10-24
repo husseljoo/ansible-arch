@@ -1,0 +1,54 @@
+# ----------------------------------------------------------------------------
+# BASIC ENVIRONMENTAL VARIABLES  ---------------------------------------------
+
+export EDITOR=micro
+export VISUAL=micro
+
+# ----------------------------------------------------------------------------
+# ALIASES  -------------------------------------------------------------------
+
+# show numerical permissions of content of the current directory
+alias statt='stat -c "%A %a %n" *'
+# ip command with colors
+alias ip='ip --color=auto'
+
+# ----------------------------------------------------------------------------
+# FZF  -----------------------------------------------------------------------
+
+export FZF_DEFAULT_COMMAND='fd --hidden'
+
+# ----------------------------------------------------------------------------
+# NNN FILE MANAGER  ----------------------------------------------------------
+
+# n runs nnn as root but keeps users environmental variables
+# it also shows hidden files
+# also show file/directory owner in status bar of currently shown file
+alias n='sudo -E nnn -H -U'
+
+# enable trash; different colors for tabs; bookmarks
+export NNN_TRASH=1
+export NNN_COLORS='2136'
+export NNN_BMS='h:~;d:~/docker;e:/etc;s:/etc/systemd/system;m:/mnt;v:/var'
+export NNN_PLUG='f:fzcd;'
+
+# shell opened from nnn using ! hotkey has indication of depth
+[ -n "$NNNLVL" ] && PS1="N$NNNLVL $PS1"
+
+# ----------------------------------------------------------------------------
+# ZSH CUSTOM HOTKEYS ---------------------------------------------------------
+
+# ctr+f prepends sudo on current line
+add_sudo (){
+    BUFFER="sudo $BUFFER"
+    zle -w end-of-line
+}
+zle -N add_sudo
+bindkey "^f" add_sudo
+
+# ----------------------------------------------------------------------------
+# DUF fixing color------------------------------------------------------------
+
+export COLORTERM=truecolor
+
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
