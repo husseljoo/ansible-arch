@@ -20,3 +20,9 @@
       become: no
       shell:
         cmd: "ln -s ~/dotfiles/nvim/ ~/.config/"
+
+    - name: add skeleton files
+      become: no
+      copy:
+        src: ~/dotfiles/skeletons
+        dest: ~/.vim/templates/
