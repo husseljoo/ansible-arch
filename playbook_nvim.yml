@@ -1,0 +1,22 @@
+---
+- name: playbook_nvim.yml - neovim set up
+  hosts: all
+  become: no
+
+  tasks:
+    - name: install neovim
+      become: yes
+      pacman:
+        update_cache: yes
+        name:
+          - neovim
+
+    - name: clone dotfiles
+      git:
+        repo: git@github.com:husseljoo/dotfiles.git
+        dest: ~
+
+    - name: symlink neovim config
+      become: no
+      shell:
+        cmd: "ln -s ~/dotfiles/nvim/ ~/.config/"

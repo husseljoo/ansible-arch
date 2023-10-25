@@ -17,17 +17,26 @@
         name: "{{ ansible_user }}"
         shell: /bin/zsh
 
+    - name: clone dotfiles
+      git:
+        repo: git@github.com:husseljoo/dotfiles.git
+        dest: ~
+
+    - name: Check if dotfiles exits is a Git repo
+      stat:
+        path: ~/dotfiles.git
+      register: git_directory
+
     - name: add my .zshrc
       become: no
       copy:
-        src: config/zshrc
+        src: ~/dotfiles/zshrc
         dest: ~/.zshrc
         mode: 0644
 
     - name: Install Oh My Zsh
-      shell: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
-      args:
-        executable: /bin/bash
+      shell:
+        cmd: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
 
     - name: Clone zsh-syntax-highlighting plugin
       git:
