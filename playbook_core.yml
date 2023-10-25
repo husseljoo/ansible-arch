@@ -35,8 +35,13 @@
           - glances
           - reflector
           - zathura
-          - neovim
-          - python-pip
+
+    # CLONE DOTFILES  ---------------------------------------------------------------
+
+    - name: clone dotfiles
+      git:
+        repo: git@github.com:husseljoo/dotfiles.git
+        dest: ~
 
     # PARU FOR AUR REPOSITORY  ---------------------------------------------------
 
