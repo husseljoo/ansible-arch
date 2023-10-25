@@ -17,6 +17,13 @@
         name: "{{ ansible_user }}"
         shell: /bin/zsh
 
+    - name: add my .zshrc
+      become: no
+      copy:
+        src: config/zshrc
+        dest: ~/.zshrc
+        mode: 0644
+
     - name: Install Oh My Zsh
       shell: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
       args:
