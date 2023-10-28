@@ -13,16 +13,27 @@
 
     - name: clone dotfiles
       git:
-        repo: git@github.com:husseljoo/dotfiles.git
-        dest: ~
+        repo: https://github.com/husseljoo/dotfiles.git
+        dest: $HOME/dotfiles/
+
+    - name: Create config directory if it does not exist
+      file:
+        path: $HOME/.config
+        state: directory
+        mode: "0755"
 
     - name: symlink neovim config
       become: no
       shell:
-        cmd: "ln -s ~/dotfiles/nvim/ ~/.config/"
+        cmd: "ln -s $HOME/dotfiles/nvim/ $HOME/.config/"
 
-    - name: add skeleton files
+    - name: Create skeletons directory
+      file:
+        path: $HOME/.vim/templates/
+        state: directory
+        mode: "0755"
+
+    - name: symlink skeletons config
       become: no
-      copy:
-        src: ~/dotfiles/skeletons
-        dest: ~/.vim/templates/
+      shell:
+        cmd: "ln -s $HOME/dotfiles/skeletons/ $HOME/.vim/templates/"
