@@ -1,0 +1,57 @@
+---
+- name: playbook_install.yml - archlinux base setup
+  hosts: all
+  become: yes
+
+  tasks:
+    # ARCH FULL UPDATE  ----------------------------------------------------------
+
+    - name: update arch
+      pacman:
+        update_cache: yes
+        upgrade: yes
+
+    # INSTALL VARIOUS PACKAGES  --------------------------------------------------
+
+    - name: install bunch of packages
+      pacman:
+        update_cache: yes
+        name:
+          - base-devel
+          - net-tools
+
+    # SET HOSTNAME  ---------------------------------------------------------------
+
+    # - name: generate fstab
+    #   become: yes
+    #   shell:
+    #     cmd: "genfstab -U -p /mnt >> /mnt/etc/fstab"
+
+    - name: set locale
+      become: yes
+      shell:
+        cmd: "sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen"
+
+    - name: set locale
+      become: yes
+      shell:
+        cmd: "echo 'LANG=en_US.UTF-8' > /etc/locale.conf"
+
+    - name: set timezone
+      become: yes
+      shell:
+        cmd: "ln -sf /usr/share/zoneinfo/Africa/Cairo /etc/localtime"
+
+    - name: set local time
+      become: yes
+      shell:
+        cmd: "hwclock --systohc --utc"
+
+    - name: Set hostname
+      hostname:
+        name: gang
+
+    - name: set hostname
+      become: yes
+      shell:
+        cmd: "echo -e '127.0.0.1\tlocalhost\n::1\tlocalhost\n127.0.1.1\tgang' | tee /etc/hosts"
