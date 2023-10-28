@@ -19,6 +19,7 @@
         name:
           - base-devel
           - net-tools
+          - zsh
 
     # SET HOSTNAME  ---------------------------------------------------------------
 
@@ -42,16 +43,29 @@
       shell:
         cmd: "ln -sf /usr/share/zoneinfo/Africa/Cairo /etc/localtime"
 
-    - name: set local time
-      become: yes
-      shell:
-        cmd: "hwclock --systohc --utc"
+    # - name: set local time
+    #   become: yes
+    #   shell:
+    #     cmd: "hwclock --systohc --utc"
 
-    - name: Set hostname
-      hostname:
-        name: gang
+    # - name: Set hostname
+    #   hostname:
+    #     name: gang
 
     - name: set hostname
       become: yes
       shell:
         cmd: "echo -e '127.0.0.1\tlocalhost\n::1\tlocalhost\n127.0.1.1\tgang' | tee /etc/hosts"
+
+    - name: Make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
+
+    - name: Add the user 'husseljo' with a zsh shell, appending the group 'wheel' to the user's groups
+      user:
+        name: husseljo
+        shell: /bin/bash
+        password: $6$RvoVX8w1r4P1x1Dq$y2RnrsBMf5nZ2Nd8JHLnARttoN/FGddFHjNjdD66YymU3tWrvN6jPLZ0WUInnLRzh92VxJ0xAyYwFN1iYaxOi/
+        groups: wheel
+        append: yes
