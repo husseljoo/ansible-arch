@@ -62,10 +62,17 @@
         name: wheel
         state: present
 
-    - name: Add the user 'husseljo' with a zsh shell, appending the group 'wheel' to the user's groups
+    - name: Add the user 'husseljo' and append the group 'wheel' to the user's groups
       user:
         name: husseljo
         shell: /bin/bash
         password: $6$RvoVX8w1r4P1x1Dq$y2RnrsBMf5nZ2Nd8JHLnARttoN/FGddFHjNjdD66YymU3tWrvN6jPLZ0WUInnLRzh92VxJ0xAyYwFN1iYaxOi/
         groups: wheel
         append: yes
+
+    - name: Add wheel group to sudoers file
+      community.general.sudoers:
+        name: work-as-sudo
+        group: wheel
+        nopassword: false
+        commands: ALL
