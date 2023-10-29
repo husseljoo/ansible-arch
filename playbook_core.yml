@@ -17,7 +17,11 @@
       pacman:
         update_cache: yes
         name:
+          - linux
+          - linux-firmware
+          - base
           - base-devel
+          - sudo
           - git
           - curl
           - wget
@@ -34,6 +38,7 @@
           - iotop
           - glances
           - reflector
+          - networkmanager
           - zathura
 
     # CLONE DOTFILES  ---------------------------------------------------------------
