@@ -13,19 +13,19 @@
 
     - name: clone dotfiles
       git:
-        repo: git@github.com:husseljoo/dotfiles.git
-        dest: ~
+        repo: https://github.com/husseljoo/dotfiles.git
+        dest: $HOME/dotfiles/
 
     - name: add alacritty config
       become: no
       copy:
-        src: ~/dotfiles/alacritty.yml
-        dest: ~/.config/alacritty/
+        src: /home/husseljo/dotfiles/alacritty.yml
+        dest: /home/husseljo/.config/alacritty/
         mode: 0644
 
-    - name: add toggle script
+    - name: add toggle scripts
       become: yes
       copy:
-        src: ~/dotfiles/scripts/toggle_allacritty_opacity
-        dest: /usr/bin/
-        mode: 0644
+        src: /home/husseljo/dotfiles/scripts/toggle_allacritty_opacity
+        dest: /usr/bin/toggle_allacritty_opacity
+        mode: a+x
