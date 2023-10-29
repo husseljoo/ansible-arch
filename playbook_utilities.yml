@@ -1,0 +1,34 @@
+---
+- name: playbook_utilities.yml - several utilities setup
+  hosts: all
+  become: no
+
+  tasks:
+    - name: install utilities
+      become: yes
+      pacman:
+        update_cache: yes
+        name:
+          - ranger
+          - ueberzug
+          # - firefox-developer-edition
+          - zathura
+
+    - name: clone dotfiles
+      git:
+        repo: https://github.com/husseljoo/dotfiles.git
+        dest: $HOME/dotfiles/
+
+    - name: add ranger config
+      become: no
+      copy:
+        src: /home/husseljo/dotfiles/rc.conf
+        dest: /home/husseljo/.config/ranger/rc.conf
+        mode: 0644
+
+    - name: add zathura config
+      become: no
+      copy:
+        src: /home/husseljo/dotfiles/zathurarc
+        dest: /home/husseljo/.config/zathura/
+        mode: 0644
