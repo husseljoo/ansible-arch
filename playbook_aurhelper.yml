@@ -25,18 +25,18 @@
 
     # PARU FOR AUR REPOSITORY  ---------------------------------------------------
 
-    - name: git clone paru repo in to /tmp
+    - name: git clone paru repo in to .srcs
       become: no
       git:
         repo: https://aur.archlinux.org/paru.git
-        dest: /home/husseljo/paru
+        dest: /home/husseljo/.srcs/paru/
         clone: yes
 
     - name: install paru using makepkg
       become: yes
       become_user: husseljo
       expect:
-        chdir: /home/husseljo/paru
+        chdir: /home/husseljo/.srcs/paru
         command: makepkg -si
         responses:
           (?i)(.*)Proceed(.*): "Y"
