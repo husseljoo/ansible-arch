@@ -1,0 +1,45 @@
+---
+- name: playbook_aurhelper.yml - install aur helper
+  hosts: all
+  become: yes
+
+  tasks:
+    # ARCH FULL UPDATE  ----------------------------------------------------------
+
+    - name: update arch
+      pacman:
+        update_cache: yes
+        upgrade: yes
+
+    # INSTALL VARIOUS PACKAGES  --------------------------------------------------
+
+    - name: install bunch of packages
+      pacman:
+        update_cache: yes
+        name:
+          - python
+          - python-pip
+          - python-setuptools
+          - python-pexpect
+          - rust
+
+    # PARU FOR AUR REPOSITORY  ---------------------------------------------------
+
+    - name: git clone paru repo in to /tmp
+      become: no
+      git:
+        repo: https://aur.archlinux.org/paru.git
+        dest: /home/husseljo/paru
+        clone: yes
+
+    - name: install paru using makepkg
+      become: yes
+      become_user: husseljo
+      expect:
+        chdir: /home/husseljo/paru
+        command: makepkg -si
+        responses:
+          (?i)(.*)Proceed(.*): "Y"
+          (?i)(.*)Enter a number(.*): "1"
+        timeout: 1500
+# #  ---------------------------------------------------------------------------
