@@ -43,14 +43,14 @@
       shell:
         cmd: "ln -sf /usr/share/zoneinfo/Africa/Cairo /etc/localtime"
 
-    # - name: set local time
-    #   become: yes
-    #   shell:
-    #     cmd: "hwclock --systohc --utc"
+    - name: set local time
+      become: yes
+      shell:
+        cmd: "hwclock --systohc --utc"
 
-    # - name: Set hostname
-    #   hostname:
-    #     name: gang
+    - name: Set hostname
+      hostname:
+        name: gang
 
     - name: set hostname
       become: yes
@@ -74,5 +74,5 @@
       community.general.sudoers:
         name: work-as-sudo
         group: wheel
-        nopassword: false
+        nopassword: true
         commands: ALL
