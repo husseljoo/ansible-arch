@@ -32,3 +32,12 @@
         src: /home/husseljo/dotfiles/zathurarc
         dest: /home/husseljo/.config/zathura/
         mode: 0644
+
+    - name: Install betterlockscreen
+      become: yes
+      shell:
+        cmd: sh -s system "$(curl -fsSL https://raw.githubusercontent.com/betterlockscreen/betterlockscreen/main/install.sh"
+
+    - name: Set betterlockscreen image
+      shell:
+        cmd: betterlockscreen -u $HOME/dotfiles/images/background.png
