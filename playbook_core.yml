@@ -27,7 +27,6 @@
           - wget
           - lsd
           - ranger
-          - nnn
           - fzf
           - bat
           - tree
@@ -40,33 +39,9 @@
           - reflector
           - networkmanager
           - zathura
+          - man
 
-    # CLONE DOTFILES  ---------------------------------------------------------------
-
-    - name: clone dotfiles
-      git:
-        repo: git@github.com:husseljoo/dotfiles.git
-        dest: ~
-
-    # PARU FOR AUR REPOSITORY  ---------------------------------------------------
-
-    - name: git clone paru repo in to /tmp
-      become: no
-      git:
-        repo: "git clone https://aur.archlinux.org/paru.git"
-        dest: $HOME
-        clone: yes
-
-    - name: install paru using makepkg
-      become: yes
-      expect:
-        chdir: $HOME
-        command: makepkg -si
-        responses:
-          (?i)(.*)Proceed with installation(.*): "y"
-          (?i)(.*)Enter a number(.*): "1"
-
-    # SYSTEM SETTINGS CHANGES ----------------------------------------------------
+    #     # SYSTEM SETTINGS CHANGES ----------------------------------------------------
 
     - name: pacman - enable color
       lineinfile:
@@ -104,28 +79,7 @@
         regexp: "^# deny = 3$"
         line: "deny = 10"
 
-    - name: enable members of wheel group to sudo
-      lineinfile:
-        path: /etc/sudoers.d/01_wheel_allow_sudo
-        state: present
-        line: "%wheel ALL=(ALL:ALL) ALL"
-        validate: /usr/sbin/visudo -cf %s
-        create: yes
-
-    # SSH ------------------------------------------------------------------------
-
-    - name: install ssh
-      pacman:
-        name:
-          - openssh
-
-    - name: enable and start ssh service
-      systemd:
-        name: sshd
-        enabled: yes
-        state: started
-
-    # NEOFETCH  ------------------------------------------------------------------
+    #     # NEOFETCH  ------------------------------------------------------------------
 
     - name: install neofetch
       pacman:
@@ -152,4 +106,4 @@
             From: '.*# info "Public IP" public_ip',
             To: '    info "Public IP" public_ip',
           }
-#  ---------------------------------------------------------------------------
+# #  ---------------------------------------------------------------------------
