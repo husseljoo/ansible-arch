@@ -26,6 +26,6 @@
     - name: add toggle scripts
       become: yes
       copy:
-        src: /home/husseljo/dotfiles/scripts/toggle_allacritty_opacity
-        dest: /usr/bin/toggle_allacritty_opacity
+        src: /home/husseljo/dotfiles/scripts/toggle_alacritty_opacity
+        dest: /usr/bin/toggle_alacritty_opacity
         mode: a+x
