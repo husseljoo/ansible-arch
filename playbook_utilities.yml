@@ -13,6 +13,8 @@
           - ueberzug
           # - firefox-developer-edition
           - zathura
+          - zathura-pdf-mupdf
+          - tesseract-data-afr
 
     - name: clone dotfiles
       git:

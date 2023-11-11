@@ -38,7 +38,6 @@
           - glances
           - reflector
           - networkmanager
-          - zathura
           - man
           - brightnessctl
 
